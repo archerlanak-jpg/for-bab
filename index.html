@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="icon" type="image/png" href="g.png">
+    <link rel="icon" href="/g.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/g-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/g-16.png">
+
+
+<meta charset="UTF-8">
+<title>Babi</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+
+<style>
+
+    /* First slide stays blue */
+.page:first-child {
+  background-color: #00153b;
+}
+
+.page:not(:first-child) {
+  background: rgba(11,46,158,0.3);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* SLIDER */
+.slider { width: 100vw; height: 100vh; overflow: hidden; position: relative; }
+.slides { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
+.page { min-width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+/* LETTER CONTAINERS */
+.letter-container {
+  max-width: 720px;
+  padding: 70px 60px;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.letter-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.letter-container::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url('d.png');
+  background-repeat: repeat;
+  background-size: 80px 80px;
+  opacity: 0.1;
+  transform: rotate(-35deg);
+  pointer-events: none;
+  z-index: -2;
+}
+
+
+.letter-photos::before { 
+  border: 2px dashed rgba(255,255,255,0.8); 
+  background: rgba(11,46,158,0.3);
+}
+.letter-letter::before { 
+  border: 3px dashed rgba(151, 108, 0, 0.8); 
+  background: rgba(253,247,242,0.85);
+}
+
+/* Text */
+h1 { font-family: 'Story Script'; font-size: 56px; text-align: center; color: #ffffff; margin-bottom: 40px; }
+p { font-size: 18px; line-height: 1.9; color: #3a2a24; margin-bottom: 26px; }
+
+/* Gallery */
+.gallery { margin: 40px 0 20px; text-align: center; }
+.gallery h2 { font-family: 'Story Script'; font-size: 30px; color: #ffffff; margin-bottom: 24px; }
+.images { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.images img { width: 180px; height: 180px; object-fit: cover; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
+.images img:hover { transform: scale(1.05); }
+
+.signature { margin-top: 50px; font-style: italic; color: #3a2a24; }
+.name { font-family: 'Great Vibes', cursive; font-size: 38px; color: #7a3e2f; margin-top: 8px; }
+.date { margin-top: 30px; font-size: 14px; text-align: right; color: #113eba; }
+
+.nav-btn {
+  width: 60px;
+  height: 60px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 0 20px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* NEXT BUTTON ARROW */
+.next-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 15px solid transparent;
+  border-left-color: #ffffff; /* right-pointing arrow */
+}
+.next-btn:hover::after {
+  border-left-color: #0b2e9e;
+}
+
+/* PREVIOUS BUTTON ARROW */
+.prev-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 15px solid transparent;
+  border-right-color: #ffffff; /* left-pointing arrow */
+}
+.prev-btn:hover::after {
+  border-right-color: #0b2e9e;
+}
+
+/* hide prev on first slide, next on last slide */
+.page:first-child .prev-btn { display: none; }
+.page:last-child .next-btn { display: none; }
+
+@media (max-width:768px){ .letter-container{padding:40px 30px;} h1{font-size:44px;} p{font-size:16px;} }
+
+/* Default page background = blue (first slide) */
+.page {
+  background-color: #1b0a69;
+}
+
+/* All pages EXCEPT the first get the letter-style background */
+.page:not(:first-child) {
+  position: relative;
+  background: rgba(11,46,158,0.3);
+}
+
+/* Watermark texture on full page */
+.page:not(:first-child)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('d.png');
+  background-repeat: repeat;
+  background-size: 80px 80px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep letter above background */
+.page:not(:first-child) .letter-container {
+  z-index: 2;
+}
+
+</style>
+</head>
+<body>
+
+<div class="slider">
+  <div class="slides">
+
+    <!-- SLIDE 1: Photos -->
+    <section class="page">
+      <div class="letter-container letter-photos">
+        <h1>Surprise!</h1>
+        <div class="gallery">
+          <h2>To: Jeff Paolo the Cat</h2>
+          <div class="images">
+            <img src="3.jpg" alt="Memory 1">
+            <img src="2.jpg" alt="Memory 2">
+            <img src="1.jpg" alt="Memory 3">
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>Love of mine,</p>
+        <p>This might be weird for you given how mean and unromantic i am usually. Haha, I'm sorry, I'm still a little bit jaded, but know that I'm slowly getting back some hollowed parts of mine now that i'm with you, and I'm so grateful to have you because of that =)</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>Firstly, I'd like to thank you for being there for me no matter what. I'm pretty sure you have absolutely no idea just how much you matter to me. I want you to know you've warmed and brightened parts of my life enough to soften me and my rough edges, maybe even helped erradicate some, in a way. Bago ako magsimula, kamusta ka? Madalas aminado akong di kita natatanong, pasensya na</p>
+        <p>I don't know if i should continue this letter in Filipino or English because I kind of want it to feel as personal as possible. Pwede ba? Pwede kaya?  ...di ba 'to magmumukhang corny sa ibang mga parte? ...paano yung mga salita na hindi ko rin naman alam sa Pilipino?</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>See? I'm fussing over which language to use just to see which one would fit better for you to read it in a way that makes you feel like I'm right infront of you as you go along this letter. It's nerve-wracking, wanting to choose everything in the best way I could to make sure I deliver it the right way for someone special (this one's you, by the way, and only you.)</p>
+        <p>Whichever one I choose to go with though, I hope you feel my love either way. Sana, kapag binasa mo 'to, hindi ka maweirduhan.</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>For the past few months of being with you (despite the distance), I've been trying to keep something intact within me, trying to hold myself back in a way that would feel manageable. Sometimes my pacing's off from trying to keep it still, but I've figured it out: my love for you holds no bounds. it's radical, messy, sometimes consuming, absolutely ridiculous it vividly wraps my days with varieties of emotions. Na para bang binabalot ng makulay na ilaw at pinupuno ang bawat espasyo sa mundo ko, na para bang binabago ako</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>I'm grateful for being given the chance to receive your love, and for having you by my side. I said it before and I'll say it again: I absolutely adore all parts of you, whether it's the messy, unhealed parts of you, or the parts where you shine in the most, or just the parts that you show only to me, even. The constant checkups whether or not I'm attentive or awake whenever we watch something, your openings for discourse in between, the gentle tone and the calm that you still hold in your voice when you're raising something that bothers you, or the silliness of your stupid antics when making jokes, the willingness to change yourself for the better, or even just for the playful banter we share. </p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>I love each and every detail the universe has given you in order to make you who you are right now, and all the details that come with that intricate soul of yours. I love you and the pair of pretty, expressive eyes you came with, the whole, deep voice and hearty laugh you fill places and voice calls with, the unruly curls that are actually soft when touched, the small speck of a mole on top of your nose, the small crater right by your eye that marks a part of a vivid memory from your childhood, the façade of a birthmark on your big, warm hands--- every little thing, Jeff Paolo, I've found to be absolutely ethereal and enthralling, in a way. And I'm not exaggerating, okay? I know it sounds like that but I can't say how much I fancy you in a way that doesn't sound absolutely cheesy at some point because admittedly, it kind of is. Wala akong reklamo at wala na akong magagawa, nagpapasalamat ako't nakilala kita</p>
+        
+        <div class="button-row">  
+        <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>It's been a while. Since I've felt solace in someone. Since I've anticipated having someone's presence visit my days. Since I've let myself find a rock to lean on, to hold me down, to help me think things through. Whoever sent you to me definitely knew your where something I needed. And I guess you turned out to be something like that. Something I... wanted? Something I've grown to long for and keep.</p>
+        <p>I hope you keep shining as you are, and that you reach whatever goal you have at this point in your life. Know that I'm here if you need anything, and I'm also willing to be a more gentle version of myself if it warmly fits you and your needs better. Dumating man ang mga araw na hindi tayo nagtutugma, sana alalahanin mong hindi ako basta-bastang mawawala</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>I am growing, albeit at quite a slow rate, with you by my side. I'm glad I fell for someone like you. The gamer guy who has nerdy interests, is quite the soft hearted type he tears up more than I do (GOOD QUALITY BY THE WAY I AM NOT IN ANY WAY COMPLAINING PLEASE DO NOT TAKE IT NEGATIVELY I ABSOLUTELY APPRECIATE YOU BEING IN TOUCH WITH YOUR EMOTIONS),  the courageous one who still has a lot of warm and overflowing love on his sleeve, the guy who's willing to be there for others, the one whose soul is wrapped in defenses to protect himself, but is willing to listen still. Manghang-mangha ako sa mga kakayahan mo at sa impluwensiyang ibinigay mo sa buhay ko</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>I feel like this letter's too long again, but then it also feels like I could go on forever. Thank you, really, for helping me be vulnerable enough to write again. For helping me feel things deeply again. For awakening this side of mine again. You have changed me in ways you wouldn't understand, made me do certain things I normally wouldn't do, and I may not be the first to say how thankful I am to have you, but I'd like you to know that my appreciation for you lasts for as long as I live, and for as long as my soul remembers your existence. No matter what happens, know that I'll be glad for you in your triumphs, and that I appreciate having met you. Halatang malayo sa nakasanayan mong ako ito, pero pagbigyan mo muna ako</p>
+        <p>It's crazy how time feels so fleeting when I'm with you. I guess that's just love, huh? </p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>So thank you, baby, I love you very much, and I really don't care if I sounded so sappy this time. I think I've grown out of my own set of cringe to fully acknowledge that you've got me absolutely whipped to a degree and I kind of like it. Nais kong malaman mong wala akong pagsisisi sa bawat oras na kasama kita.</p>
+        
+        <p>Having said all of this,  I'd like to ask you if you could be my valentine? Will you be my valentine? =) </p>
+        <p>*If the answer is no the words and feelings I poured into this letter still exist and are absolutely true and I have no shame in admitting nor will I retract my words but that also doesn't mean I would not be bummed if you said no but it's okay though no pressure =)*</p>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+          <button class="nav-btn next-btn" onclick="nextSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12 -->
+    <section class="page">
+      <div class="letter-container letter-letter">
+        <p>Love you lots! Mahal kita lagi, kahit anong mangyari, babi =)</p>
+        <p>Love always,</p>
+        <div class="signature">
+          From da GOAT,
+          <div class="name">Moni =)</div>
+
+            <p>(informal na 'to parang babalutin ka na ata ng espirito ng maligno pag sineryoso ko rin 'to)</p>
+            <p>(Also, individual letter rin in a way yung Filipino lines, so if you read the Filipino lines separately it's still a full... poem? letter? in a way. I made it this way so both languages could satisfy what I'm trying to express, both together and individually. I love you :^) look at me thinking and constructing stuff this way for my baby, what a loser  *not complaining though)</p>
+        </div>
+        <div class="date">hehe luv u happy valentine's, nerd</div>
+        <div class="button-row">
+          <button class="nav-btn prev-btn" onclick="prevSlide()"></button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+let currentSlide = 0;
+function nextSlide() {
+  const slides = document.querySelector(".slides");
+  const total = document.querySelectorAll(".page").length;
+  if (currentSlide < total - 1) { currentSlide++; slides.style.transform = `translateX(-${currentSlide * 100}vw)`; }
+}
+function prevSlide() {
+  const slides = document.querySelector(".slides");
+  if (currentSlide > 0) { currentSlide--; slides.style.transform = `translateX(-${currentSlide * 100}vw)`; }
+}
+</script>
+
+<audio id="bg music" loop>
+  <source src="coming home-track.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bg music");
+
+// try to autoplay after first user interaction (browser rule)
+document.addEventListener("click", () => {
+  if (music.paused) {
+    music.play();
+  }
+}, { once: true });
+</script>
+
+</body>
+</html>
